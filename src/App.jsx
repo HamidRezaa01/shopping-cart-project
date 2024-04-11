@@ -1,9 +1,14 @@
-import Shop from "./Components/Shop/Shop"
+import { Routes,Route } from 'react-router-dom'
+import NavBar from "./Components/Navigation/NavBar/NavBar"
+import Shop from './pages/Shop'
 
 const App = () => {
   return (
     <>
-      <Shop />
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<Shop />} />
+      </Routes>
     </>
   )
 }
