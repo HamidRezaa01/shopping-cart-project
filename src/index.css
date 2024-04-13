@@ -3,5 +3,12 @@
 @tailwind utilities;
 
 body {
+    font-family: 'Jakarta';
     background: rgb(5, 6, 16);
+}
+
+@font-face {
+    font-family: 'Jakarta';
+    src: url('../public/fonts/PlusJakartaSans-Medium.ttf');
+    font-style: normal;
 }
