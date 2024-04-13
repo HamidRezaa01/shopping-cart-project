@@ -2,11 +2,15 @@ import { useState } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { BsCartPlus } from "react-icons/bs";
 import { GoArrowRight } from "react-icons/go";
-import headerImageOne from '../../../assets/images/image1.webp'
-import headerImageTwo from '../../../assets/images/image2.webp'
+import { Box } from '@mui/material';
+import { Modal } from '@mui/material';
+import { Typography } from '@mui/material';
+import headerImageOne from '../../../../public/images/image1.webp'
+import headerImageTwo from '../../../../public/images/image2.webp'
 
 const NavBar = () => {
     const [nav, setNav] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const navItems = [
         { id: 1, navItem: 'Home' },
@@ -15,11 +19,30 @@ const NavBar = () => {
         { id: 4, navItem: 'About' },
     ]
 
-
-
     const handlerNav = () => {
         setNav(!nav)
     }
+
+    const showModalHandler = () => {
+        setShowModal(true)
+    }
+
+    const closeModalHandler = () => {
+        setShowModal(false)
+    }
+
+    const style = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: 400,
+        color: 'white',
+        bgcolor: "rgb(5, 6, 16)", // Color
+        border: "1px solid #000",
+        boxShadow: 24,
+        p: 4
+      };
 
     return (
         <>
@@ -32,10 +55,19 @@ const NavBar = () => {
                     ))}
                 </ul>
 
-                <span className='bg-green-800 flex hidden md:flex px-4 rounded justify-center items-center'>
+                <span className='ring-4 ring-green-900 flex hidden md:flex px-4 rounded justify-center items-center'>
                     <BsCartPlus className='text-white' />
-                    <a className='p-2 text-white inline' href="#">Shopping</a>
+                    <a onClick={showModalHandler} className='p-2 text-white inline' href="#">CART</a>
                 </span>
+                <section>
+                    <Modal open={showModal} onClose={closeModalHandler} >
+                        <Box sx={style}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Products:
+                            </Typography>
+                        </Box>
+                    </Modal>
+                </section>
 
                 <section onClick={handlerNav} className='block md:hidden text-white'>
                     {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
@@ -52,7 +84,7 @@ const NavBar = () => {
                         ))}
                         <span className='w-full flex bg-green-900 curser-pointer justify-center p-4 items-center'>
                             <BsCartPlus className='text-white' />
-                            <a className='text-white inline ml-2' href="#">Shopping</a>
+                            <a className='text-white inline ml-2' href="#">CART</a>
                         </span>
                     </section>
                 </ul>
@@ -70,8 +102,8 @@ const NavBar = () => {
                     </section>
                 </section>
                 <section className='flex flex-col md:flex-row gap-4'>
-                    <img src={headerImageOne} alt="" className='w-full md:w-72'/>
-                    <img src={headerImageTwo} alt="" className='w-full md:w-72 md:mt-20'/>
+                    <img src={headerImageOne} alt="" className='w-full md:w-72' />
+                    <img src={headerImageTwo} alt="" className='w-full md:w-72 md:mt-20' />
                 </section>
             </section>
         </>
