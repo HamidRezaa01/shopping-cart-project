@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { useState, useContext } from 'react'
+import { CartContext } from '../../../context/CartContext'
+import CartProduct from '../../CartProduct/CartProduct'
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { BsCartPlus } from "react-icons/bs";
 import { GoArrowRight } from "react-icons/go";
 import { Box } from '@mui/material';
 import { Modal } from '@mui/material';
-import { Typography } from '@mui/material';
 import headerImageOne from '../../../../public/images/image1.webp'
 import headerImageTwo from '../../../../public/images/image2.webp'
 
@@ -19,17 +20,11 @@ const NavBar = () => {
         { id: 4, navItem: 'About' },
     ]
 
-    const handlerNav = () => {
-        setNav(!nav)
-    }
+    const handlerNav = () => { setNav(!nav) }
 
-    const showModalHandler = () => {
-        setShowModal(true)
-    }
+    const showModalHandler = () => { setShowModal(true) }
 
-    const closeModalHandler = () => {
-        setShowModal(false)
-    }
+    const closeModalHandler = () => { setShowModal(false) }
 
     const style = {
         position: "absolute",
@@ -42,7 +37,11 @@ const NavBar = () => {
         border: "1px solid #000",
         boxShadow: 24,
         p: 4
-      };
+    };
+
+    const cart = useContext(CartContext)
+
+    const productCount = cart.items.reduce((sum, product) => sum + product.quantity, 0)
 
     return (
         <>
@@ -56,15 +55,35 @@ const NavBar = () => {
                 </ul>
 
                 <span className='ring-4 ring-green-900 flex hidden md:flex px-4 rounded justify-center items-center'>
+                    <div className='text-white'>({productCount})</div>
                     <BsCartPlus className='text-white' />
                     <a onClick={showModalHandler} className='p-2 text-white inline' href="#">CART</a>
                 </span>
                 <section>
                     <Modal open={showModal} onClose={closeModalHandler} >
                         <Box sx={style}>
-                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Products:
-                            </Typography>
+                            <>
+                                <h2 className='mb-5'>Products : {productCount}</h2>
+                                {productCount > 0 ? (
+                                    <>
+                                        <section className='mb-5'>
+                                            {cart.items.map((item) => (
+                                                <CartProduct
+                                                    key={item.id}
+                                                    id={item.id}
+                                                    quantity={item.quantity}
+                                                ></CartProduct>
+                                            ))}
+                                        </section>
+                                        <section className='text-white'>
+                                            <h1>Todal Amount : ${cart.getTotalAmount()}</h1>
+                                        </section>
+                                    </>
+                                ) : (
+                                    <h2>the Shopping cart is empty</h2>
+                                )}
+                                <button onClick={closeModalHandler}>Close Shopping Cart</button>
+                            </>
                         </Box>
                     </Modal>
                 </section>
@@ -74,7 +93,7 @@ const NavBar = () => {
                 </section>
 
                 <ul className={
-                    nav ? 'fixed md:hidden left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-blue-950 ease-in-out duration-300'
+                    nav ? 'fixed md:hidden left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-slate-950 ease-in-out duration-300'
                         : 'ease-in-out w-[60%] duration-500 fixed top-0 bottom-0 left-[-100%]'
                 }>
                     <section>
@@ -83,8 +102,11 @@ const NavBar = () => {
                             <li className=' p-4 border-b rounded-xl duration-300 text-white' key={item.id}>{item.navItem}</li>
                         ))}
                         <span className='w-full flex bg-green-900 curser-pointer justify-center p-4 items-center'>
+                            <div className='text-white'>({productCount})</div>
                             <BsCartPlus className='text-white' />
-                            <a className='text-white inline ml-2' href="#">CART</a>
+                            <a className='text-white inline ml-2' href="#" onClick={showModalHandler}>
+                                CART
+                            </a>
                         </span>
                     </section>
                 </ul>
