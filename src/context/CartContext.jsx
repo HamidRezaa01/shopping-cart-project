@@ -4,14 +4,15 @@ import { getProductData } from '../data/items';
 
 export const CartContext = createContext({
     items: [],
-    getProductQuantity: () => { },
-    addItemToCart: () => { },
-    removeItemFromCart: () => { },
-    deleteFromCart: () => { },
-    getTotalAmount: () => { },
+    getProductQuantity: () => {},
+    addItemToCart: () => {},
+    deleteFromCart: () => {},
+    removeItemFromCart: () => {},
+    getTotalAmount: () => {}
 })
 
-const CartProvider = ({ children }) => {
+
+export const CartProvider = ({ children }) => {
     const [cartProducts, setCartProducts] = useState([])
 
     const getProductQuantity = (id) => {
@@ -53,10 +54,7 @@ const CartProvider = ({ children }) => {
             deleteFromCart(id)
         } else {
             setCartProducts(
-                cartProducts.map((item) => (
-                    item.id === id ? { ...item, quantity: quantity - 1 } : item
-                ))
-            )
+                cartProducts.map(item => item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
         }
     }
 
@@ -66,12 +64,14 @@ const CartProvider = ({ children }) => {
         cartProducts.map((item) => {
             const productData = getProductData(item.id)
 
-           totalAmount += productData.price * item.quantity
+            totalAmount += Math.floor(productData.price) * item.quantity
         })
+
+        return totalAmount
     }
 
     const contextValue = {
-        item: cartProducts,
+        items: cartProducts,
         getProductQuantity,
         addItemToCart,
         removeItemFromCart,
@@ -83,8 +83,6 @@ const CartProvider = ({ children }) => {
         <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
     )
 }
-
-export default CartProvider
 
 
 
