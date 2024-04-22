@@ -26,6 +26,14 @@ const NavBar = () => {
 
     const closeModalHandler = () => { setShowModal(false) }
 
+    const checkOut = async () => {
+        await fetch('http://localhost:3000/api'), {
+            method: 'POST',
+            headers: {'Content-type': 'application/json'},
+            body: {items: cart.items}
+        }
+    }
+
     const style = {
         position: "absolute",
         top: "50%",
@@ -66,7 +74,7 @@ const NavBar = () => {
                                 <h2 className='mb-5'>Products : {productCount}</h2>
                                 {productCount > 0 ? (
                                     <>
-                                        <section className='mb-5'>
+                                        <section className='mb-10'>
                                             {cart.items.map((item) => (
                                                 <CartProduct
                                                     key={item.id}
@@ -75,13 +83,14 @@ const NavBar = () => {
                                                 ></CartProduct>
                                             ))}
                                         </section>
-                                        <section className='text-white'>
+                                        <section className='text-white mb-2'>
                                             <h1>Todal Amount : ${cart.getTotalAmount()}</h1>
                                         </section>
                                     </>
                                 ) : (
                                     <h2>the Shopping cart is empty</h2>
                                 )}
+                                <button onClick={checkOut}>Submit Orders</button>
                                 <button onClick={closeModalHandler}>Close Shopping Cart</button>
                             </>
                         </Box>
@@ -112,7 +121,7 @@ const NavBar = () => {
                 </ul>
             </section>
 
-            <section className='flex flex-col md:flex-row justify-around container mx-auto text-white mt-40'>
+            <section className='flex flex-col md:flex-row justify-around container mx-auto text-white mt-40 mb-36'>
                 <section>
                     <h1 className='font-bold text-5xl mb-10'>Make a beutiful garden With<br /> your Own hand</h1>
                     <p className='text-base mb-10'>Find your dreams plant for your home<br />decoration with us and we will make it happen</p>
