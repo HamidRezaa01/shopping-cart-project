@@ -4,11 +4,11 @@ import { getProductData } from '../data/items';
 
 export const CartContext = createContext({
     items: [],
-    getProductQuantity: () => {},
-    addItemToCart: () => {},
-    deleteFromCart: () => {},
-    removeItemFromCart: () => {},
-    getTotalAmount: () => {}
+    getProductQuantity: () => { },
+    addItemToCart: () => { },
+    deleteFromCart: () => { },
+    removeItemFromCart: () => { },
+    getTotalAmount: () => { }
 })
 
 

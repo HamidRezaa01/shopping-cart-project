@@ -29,8 +29,8 @@ const NavBar = () => {
     const checkOut = async () => {
         await fetch('http://localhost:3000/api'), {
             method: 'POST',
-            headers: {'Content-type': 'application/json'},
-            body: {items: cart.items}
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({items: cart.items}),
         }
     }
 
@@ -123,7 +123,7 @@ const NavBar = () => {
 
             <section className='flex flex-col md:flex-row justify-around container mx-auto text-white mt-40 mb-36'>
                 <section>
-                    <h1 className='font-bold text-5xl mb-10'>Make a beutiful garden With<br /> your Own hand</h1>
+                    <h1 className='font-bold text-5xl mb-10'>Make a beuatiful garden With<br /> your Own hand</h1>
                     <p className='text-base mb-10'>Find your dreams plant for your home<br />decoration with us and we will make it happen</p>
                     <section>
                         <button className='flex justify-center rounded items-center border border-green-800 px-4 py-4 '>

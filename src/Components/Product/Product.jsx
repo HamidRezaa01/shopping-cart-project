@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { CartContext } from '../../context/CartContext'
 import { GrFormAdd } from 'react-icons/gr'
 import { GrFormSubtract } from 'react-icons/gr'
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -13,7 +12,7 @@ const Product = ({ product }) => {
 
   return (
     <>
-      <section className='flex justify-between rounded items-center bg-green-950 w-96 h-72 mt-36 mb-20 p-2'>
+      <section className='flex justify-between rounded items-center bg-green-950 w-96 h-72 p-2 mb-36'>
         <section>
           <img src={product.img} alt="" className="w-auto" />
         </section>
